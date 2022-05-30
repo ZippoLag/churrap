@@ -16,23 +16,24 @@ La versión inicial está desarrollada en .Net Core 5.1, constando de un FE (apl
 
 ## TODO:
 
-. Implementar slice vertical del PoC:
+* Implementar slice vertical del PoC:
     - FE Churrerx: capacidad de cargar posicion actual manualmente
     - FE Cliente: capacidad de ver churrerxs que hayan reportado posicion actual cercana (X metros) recientemente (últimos X minutos)
     - BE: endpoint para cargar posicion actual de churrerx
     - BE: endpoint para devolver churrerxs en actividad cerca
-. Implementar autenticación para evitar spam y suplantación de identidad
-. Implementar servicio en segundo plano que reporta ubicación continuamente de churrerx
+* Implementar autenticación para evitar spam y suplantación de identidad
+* Implementar servicio en segundo plano que reporta ubicación continuamente de churrerx
     - FE Churrerx: activa reporte de ubicacion cada X segundos
     - BE: incorpora cálculo de vector de velocidad
     - FE Cliente: muestra dirección / velocidad de los churreros cercanos
-. Implementar "corneta":
+* Implementar "corneta":
     - Clientes pueden informar su posicion actual y deseo de comprar
     - Churrerxs pueden informar a quienes están cerca cuando se han detenido en una esquina tocando una corneta
-. Implementar botón de "esperame!":
+* Implementar botón de "esperame!":
     - Clientes pueden pedirle a un churrerx puntual que se detenga para que le puedan comprar
     - Churrerxs reciben notificacion push
 
 ## Changelog (en orden inverso):
 
-. 2022/05/29: git.init
+* 2022/05/30: added xamarin mobile boilerplate
+* 2022/05/29: git.init
