@@ -14,6 +14,10 @@ María, por su parte escucha a lo lejos una corneta y tras vestirse apresuradame
 
 La versión inicial está desarrollada en .Net Core 5.1, constando de un FE (aplicacion de Android) desarrollado en Xamarin, y un backend basado en API REST desplegado en Azure. BD a definir (SQLite para pruebas de momento).
 
+## Ejecutando localmente:
+
+1. Para que funcione la app se requiere una API KEY de Google Maps, la misma puede pegarse en el archivo AndroidManifest.xml del proyecto Churrap.Android, o mediante la creacion de un archivho api_keys.xml que la contenga, dentro de la carpeta Resources/values del mismo. Para generar una key propia dirigíte a https://console.cloud.google.com/apis/dashboard crea un proyecto y dentro del mismo una KEY para la API de GoogleMaps. Nota: podrías necesitar crear una cuenta de facturación para esto, pero el uso básico es gratuito.
+
 ## TODO:
 
 * Implementar slice vertical del PoC:
@@ -35,6 +39,7 @@ La versión inicial está desarrollada en .Net Core 5.1, constando de un FE (apl
 
 ## Changelog (en orden inverso):
 
+* 2022/06/01: removidas claves hardcodeadas publicamente
 * 2022/05/31: implementacion basica de maps
 * 2022/05/30: agregado proyecto xamarin esqueleto
 * 2022/05/29: git.init
