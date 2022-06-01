@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32413.511
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Churrap.Android", "Churrap.Android\Churrap.Android.csproj", "{8E2F0CE6-6AF6-4E31-9C07-422838C30138}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Churrap.Android", "Churrap.Android\Churrap.Android.csproj", "{43738090-B100-473C-8028-674C5226516F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Churrap", "Churrap\Churrap.csproj", "{7768C798-C7CE-4A21-8C4F-5A2F50C3FB7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Churrap", "Churrap\Churrap.csproj", "{9DB78D33-A61F-41DB-9FF7-52DDCFDB1ADE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{060DB790-7B21-4DF0-8D0E-84C4C0F93E1E}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,23 +18,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8E2F0CE6-6AF6-4E31-9C07-422838C30138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E2F0CE6-6AF6-4E31-9C07-422838C30138}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E2F0CE6-6AF6-4E31-9C07-422838C30138}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{8E2F0CE6-6AF6-4E31-9C07-422838C30138}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E2F0CE6-6AF6-4E31-9C07-422838C30138}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E2F0CE6-6AF6-4E31-9C07-422838C30138}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{7768C798-C7CE-4A21-8C4F-5A2F50C3FB7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7768C798-C7CE-4A21-8C4F-5A2F50C3FB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7768C798-C7CE-4A21-8C4F-5A2F50C3FB7F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{7768C798-C7CE-4A21-8C4F-5A2F50C3FB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7768C798-C7CE-4A21-8C4F-5A2F50C3FB7F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7768C798-C7CE-4A21-8C4F-5A2F50C3FB7F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{43738090-B100-473C-8028-674C5226516F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43738090-B100-473C-8028-674C5226516F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43738090-B100-473C-8028-674C5226516F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{43738090-B100-473C-8028-674C5226516F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43738090-B100-473C-8028-674C5226516F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43738090-B100-473C-8028-674C5226516F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9DB78D33-A61F-41DB-9FF7-52DDCFDB1ADE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DB78D33-A61F-41DB-9FF7-52DDCFDB1ADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DB78D33-A61F-41DB-9FF7-52DDCFDB1ADE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9DB78D33-A61F-41DB-9FF7-52DDCFDB1ADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DB78D33-A61F-41DB-9FF7-52DDCFDB1ADE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DB78D33-A61F-41DB-9FF7-52DDCFDB1ADE}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9B29955A-C441-466C-A4AB-C97BDAA6FBE1}
+		SolutionGuid = {66CEC37F-0C91-4F09-ABB2-7651B875745B}
 	EndGlobalSection
 EndGlobal

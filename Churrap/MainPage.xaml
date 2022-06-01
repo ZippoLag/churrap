@@ -1,24 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              x:Class="Churrap.MainPage">
 
-    <StackLayout>
-        <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
-            <Label Text="Welcome to Xamarin.Forms!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
-        </Frame>
-        <Label Text="Start developing now" FontSize="Title" Padding="30,10,30,10"/>
-        <Label Text="Make changes to your XAML file and save to see your UI update in the running app with XAML Hot Reload. Give it a try!" FontSize="16" Padding="30,0,30,0"/>
-        <Label FontSize="16" Padding="30,24,30,0">
-            <Label.FormattedText>
-                <FormattedString>
-                    <FormattedString.Spans>
-                        <Span Text="Learn more at "/>
-                        <Span Text="https://aka.ms/xamarin-quickstart" FontAttributes="Bold"/>
-                    </FormattedString.Spans>
-                </FormattedString>
-            </Label.FormattedText>
-        </Label>
-    </StackLayout>
+    <ContentPage Title="Cliente">
+        <FlexLayout Direction="Column">
+            <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
+                <Label Text="Churrap - Cliente" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+            </Frame>
 
-</ContentPage>
+            <FlexLayout FlexLayout.Grow="1">
+                <maps:Map x:Name="MapaCliente" FlexLayout.Grow="1" />
+            </FlexLayout>
+
+            <StackLayout Spacing="15" Padding="20" Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" HeightRequest="50" Text="Street" Clicked="Street_OnClicked" />
+                <Button HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="50" Text="Hybrid" Clicked="Hybrid_OnClicked" />
+                <Button HorizontalOptions="StartAndExpand" VerticalOptions="Center" HeightRequest="50" Text="Satellite" Clicked="Satellite_OnClicked" />
+            </StackLayout>
+        </FlexLayout>
+    </ContentPage>
+
+    <ContentPage Title="Churrerx">
+        <FlexLayout Direction="Column">
+            <StackLayout>
+                <Label Text="Nombre Churrerx" FontSize="Title" Padding="30,10,30,10"/>
+                <Entry x:Name="NombreChurrerx" Text="100000000"/>
+                <Label Text="Posición:"/>
+                <Label x:Name="Pos"/>
+                <Button x:Name="Enviar" Text="Enviar"/>
+            </StackLayout>
+            <FlexLayout FlexLayout.Grow="1">
+                <maps:Map x:Name="MapaChurrerx" FlexLayout.Grow="1" />
+            </FlexLayout>
+        </FlexLayout>
+    </ContentPage>
+</TabbedPage>

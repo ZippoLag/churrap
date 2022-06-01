@@ -35,5 +35,6 @@ La versión inicial está desarrollada en .Net Core 5.1, constando de un FE (apl
 
 ## Changelog (en orden inverso):
 
-* 2022/05/30: added xamarin mobile boilerplate
+* 2022/05/31: implementacion basica de maps
+* 2022/05/30: agregado proyecto xamarin esqueleto
 * 2022/05/29: git.init
