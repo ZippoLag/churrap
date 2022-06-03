@@ -12,7 +12,17 @@ María, por su parte escucha a lo lejos una corneta y tras vestirse apresuradame
 
 ## Detalles técnicos
 
+Mi plan no es "mostrar todo lo que sé acerca de Xamarin" ni crear una aplicación que sirva de base para alguien que esté buscando aprender, sino tan sólo volver a subirme a una bicicleta que hace años no monto y ver cómo suenan la cantidad de cornetas nuevas que alguien le puso al manubrio sin avisarme. Con suerte terminaré creando una app usable (y que me ahorre salir a buscar churreros con un sonar).
+
 La versión inicial está desarrollada en .Net Core 5.1, constando de un FE (aplicacion de Android) desarrollado en Xamarin, y un backend basado en API REST desplegado en Azure. BD a definir (SQLite para pruebas de momento).
+
+### ¿Qué onda el espanglish?
+
+Lo cotidiano para mí es escirbir código 100% en inglés, no obstante aprovechando que no parece haber mucha divulgación de Xamarin en español (más allá de la doc. oficial de MicroSoft) y siendo que el dominio de este desarrollo es netamente local (¿o existen en paises angloparlantes vendedorxs ambulantes de churros?)
+
+#### ¡¿Es eso lenguaje inclusivo?! ¡¿quiere alguien pensar en lxs niñxs?!
+
+Si, si bien soy un hijo de los 90's al que no le sale con naturalidad, y si bien es cierto que el 90% de quienes venden churros en bici son hombres, no me parece que le haga mal a nadie el flexibilizar un poco la lengua, al fin y al cabo la misma es descriptiva, no prescriptiva, carajo. ... ¿Por qué _churerrxs_ y no _churreres_? No sé, salió así, quizás haga un refactor en el futuro.
 
 ## Ejecutando localmente:
 
