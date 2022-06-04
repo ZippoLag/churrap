@@ -11,7 +11,7 @@ using Xamarin.Forms.Maps;
 
 namespace Churrap
 {
-    public partial class MainPage : TabbedPage
+    public partial class AppShell : TabbedPage
     {
 
         private static bool SonMismoPunto(Position a, Position b)
@@ -20,7 +20,7 @@ namespace Churrap
         }
 
         
-        public MainPage()
+        public AppShell()
         {
             InitializeComponent();
 
