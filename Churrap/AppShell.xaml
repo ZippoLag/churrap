@@ -13,12 +13,6 @@
             <FlexLayout FlexLayout.Grow="1">
                 <maps:Map x:Name="MapaCliente" FlexLayout.Grow="1" />
             </FlexLayout>
-
-            <StackLayout Spacing="15" Padding="20" Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" HeightRequest="50" Text="Street" Clicked="Street_OnClicked" />
-                <Button HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="50" Text="Hybrid" Clicked="Hybrid_OnClicked" />
-                <Button HorizontalOptions="StartAndExpand" VerticalOptions="Center" HeightRequest="50" Text="Satellite" Clicked="Satellite_OnClicked" />
-            </StackLayout>
         </FlexLayout>
     </ContentPage>
 
