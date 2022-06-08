@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Churrap.Views.MapaClientePage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:Churrap.ViewModels" 
+            xmlns:model="clr-namespace:Churrap.Models"
+            x:DataType="local:MapaClienteViewModel">
+
+    <ContentPage Title="Mapa"
+                 xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps">
+        <FlexLayout Direction="Column">
+            <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
+                <Label Text="Churrap - Cliente" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+            </Frame>
+
+            <FlexLayout FlexLayout.Grow="1">
+                <maps:Map x:Name="MapaCliente" FlexLayout.Grow="1" ItemsSource="{Binding Churrerxs}">
+                    <maps:Map.ItemTemplate>
+                        <DataTemplate>
+                            <maps:Pin x:DataType="model:Churrerx"
+                                      Position="{Binding Posicion}"
+                                      Label="{Binding Nombre}" />
+                        </DataTemplate>
+                    </maps:Map.ItemTemplate>
+                </maps:Map>
+            </FlexLayout>
+            <StackLayout Spacing="15" Padding="20" Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="⌖" Command="{Binding ActualizarPosicionActualCommand}" IsEnabled="{Binding NotIsBusy} />
+                <Button HorizontalOptions="StartAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="🔍" Command="{Binding LoadChurrerxsCommand}" IsEnabled="{Binding NotIsBusy} />
+            </StackLayout>
+        </FlexLayout>
+    </ContentPage>
+    
+    <ContentPage Title="Lista">
+        <ContentPage.ToolbarItems>
+            <ToolbarItem Text="Add" Command="{Binding AddChurrerxCommand}" />
+        </ContentPage.ToolbarItems>
+        <RefreshView x:DataType="local:MapaClienteViewModel" Command="{Binding LoadChurrerxsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <CollectionView x:Name="ChurrerxsListView"
+                ItemsSource="{Binding Churrerxs}"
+                SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10" x:DataType="model:Churrerx">
+                            <Label Text="{Binding Nombre}" 
+                            LineBreakMode="NoWrap" 
+                            FontSize="16" />
+                            <!--TODO: mostrar distancia en lugar de coordenadas -->
+                            <Label Text="{Binding Path=Posicion.Latitude, StringFormat='Latitud: {0}'}" LineBreakMode="NoWrap"  FontSize="13" />
+                            <Label Text="{Binding Path=Posicion.Longitude, StringFormat='Longitud: {0}'}" LineBreakMode="NoWrap" FontSize="13" />
+
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:MapaClienteViewModel}}, Path=ChurrerxTapped}"		
+                                CommandParameter="{Binding .}">
+                                </TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </ContentPage>
+</TabbedPage>

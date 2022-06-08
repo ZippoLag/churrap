@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Churrap.Services;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,6 +11,7 @@ namespace Churrap
         {
             InitializeComponent();
 
+            DependencyService.Register<MockChurrerxService>();
             MainPage = new AppShell();
         }
 

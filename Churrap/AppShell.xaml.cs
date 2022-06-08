@@ -11,26 +11,11 @@ using Xamarin.Forms.Maps;
 
 namespace Churrap
 {
-    public partial class AppShell : TabbedPage
+    public partial class AppShell : Xamarin.Forms.Shell
     {
-
-        private static bool SonMismoPunto(Position a, Position b)
-        {
-            return Distance.BetweenPositions(a, b).Meters < 1;
-        }
-
-        
         public AppShell()
         {
             InitializeComponent();
-
-            //TODO: reemplazar con ubicacion real para centrar el mapa
-            var ubicacionActual = new Position(-32.96, -60.66);
-
-            //TODO: configurar como parametro el radio
-            MapaCliente.MoveToRegion(
-                MapSpan.FromCenterAndRadius(
-                    ubicacionActual, Distance.FromKilometers(1)));
         }
     }
 }
