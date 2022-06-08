@@ -49,8 +49,7 @@ Si, si bien soy un hijo de los 90's al que no le sale con naturalidad, y si bien
 
 ## Changelog (en orden inverso):
 
-* Haciendo: 2022/06/04: refactoreando para usar MVVM con AppShell
-
+* 2022/06/07: refactoreada solucion para usar MVVM con AppShell e implementado Modelo y Servicio Mockeado básico
 * 2022/06/01: removidas claves hardcodeadas publicamente
 * 2022/05/31: implementacion basica de maps
 * 2022/05/30: agregado proyecto xamarin esqueleto

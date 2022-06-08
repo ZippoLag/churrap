@@ -1,33 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
-             x:Class="Churrap.AppShell">
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:Churrap.Views"
+       Title="Churrap"
+       x:Class="Churrap.AppShell">
 
-    <ContentPage Title="Cliente">
-        <FlexLayout Direction="Column">
-            <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
-                <Label Text="Churrap - Cliente" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
-            </Frame>
+    <Shell.Resources>
+        <ResourceDictionary>
+        </ResourceDictionary>
+    </Shell.Resources>
 
-            <FlexLayout FlexLayout.Grow="1">
-                <maps:Map x:Name="MapaCliente" FlexLayout.Grow="1" />
-            </FlexLayout>
-        </FlexLayout>
-    </ContentPage>
-
-    <ContentPage Title="Churrerx">
-        <FlexLayout Direction="Column">
-            <StackLayout>
-                <Label Text="Nombre Churrerx" FontSize="Title" Padding="30,10,30,10"/>
-                <Entry x:Name="NombreChurrerx" Text="100000000"/>
-                <Label Text="Posición:"/>
-                <Label x:Name="Pos"/>
-                <Button x:Name="Enviar" Text="Enviar"/>
-            </StackLayout>
-            <FlexLayout FlexLayout.Grow="1">
-                <maps:Map x:Name="MapaChurrerx" FlexLayout.Grow="1" />
-            </FlexLayout>
-        </FlexLayout>
-    </ContentPage>
-</TabbedPage>
+    <TabBar>
+        <ShellContent Title="Buscar Churrerx" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:MapaClientePage}" />
+    </TabBar>
+</Shell>
