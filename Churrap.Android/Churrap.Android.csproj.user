@@ -4,5 +4,7 @@
     <SelectedDevice>pixel_xl_q_10_0_-_api_29</SelectedDevice>
     <ActiveDebugProfile>pixel_xl_q_10_0_-_api_29</ActiveDebugProfile>
     <DefaultDevice>pixel_xl_q_10_0_-_api_29</DefaultDevice>
+    <AndroidDesignerPreferredTheme>MainTheme</AndroidDesignerPreferredTheme>
+    <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
   </PropertyGroup>
 </Project>

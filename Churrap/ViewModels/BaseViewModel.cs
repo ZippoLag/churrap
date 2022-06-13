@@ -18,7 +18,7 @@ namespace Churrap.ViewModels
             get => isBusy;
             set => SetProperty(ref isBusy, value);
         }
-        public readonly bool NotIsBusy => !isBusy;
+        public bool NotIsBusy {get => !isBusy;}
 
         private string title = string.Empty;
         public string Title

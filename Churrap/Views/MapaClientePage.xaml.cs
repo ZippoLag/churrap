@@ -21,7 +21,7 @@ namespace Churrap.Views
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new MapaClienteViewModel()
+            BindingContext = _viewModel = new MapaClienteViewModel();
 
             _viewModel.PropertyChanged += OnPosicionActualChanged;
         }

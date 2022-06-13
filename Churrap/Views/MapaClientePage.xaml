@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Churrap.Views.MapaClientePage"
@@ -26,8 +26,8 @@
                 </maps:Map>
             </FlexLayout>
             <StackLayout Spacing="15" Padding="20" Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="⌖" Command="{Binding ActualizarPosicionActualCommand}" IsEnabled="{Binding NotIsBusy} />
-                <Button HorizontalOptions="StartAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="🔍" Command="{Binding LoadChurrerxsCommand}" IsEnabled="{Binding NotIsBusy} />
+                <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="⌖" Command="{Binding ActualizarPosicionActualCommand}" IsEnabled="{Binding NotIsBusy}" />
+                <Button HorizontalOptions="StartAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="🔍" Command="{Binding LoadChurrerxsCommand}" IsEnabled="{Binding NotIsBusy}" />
             </StackLayout>
         </FlexLayout>
     </ContentPage>
