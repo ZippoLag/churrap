@@ -17,6 +17,8 @@ namespace Churrap.Views
     {
         private MapaClienteViewModel _viewModel;
 
+        public readonly Circle CirclePosicionActual;
+
         public MapaClientePage()
         {
             InitializeComponent();
@@ -24,6 +26,8 @@ namespace Churrap.Views
             BindingContext = _viewModel = new MapaClienteViewModel();
 
             _viewModel.PropertyChanged += OnPosicionActualChanged;
+
+            CirclePosicionActual = new Circle { Center = new Position(), Radius = Distance.FromMeters(20) };
         }
 
         protected override void OnAppearing()
@@ -43,10 +47,31 @@ namespace Churrap.Views
             //TODO: configurar como parametro el radio?
             if (e.PropertyName.Equals("PosicionActual"))
             {
+                MoverPinYVistaMapaAPosicionActual();
+            }
+        }
+
+        protected void OnActualizarPosicionTapped(object sender, EventArgs e)
+        {
+            MoverPinYVistaMapaAPosicionActual();
+
+            _viewModel.ActualizarPosicionActualCommand.Execute(sender);
+        }
+
+        private void MoverPinYVistaMapaAPosicionActual()
+        {
+            if (_viewModel.PosicionActual != null)
+            {
                 MapaCliente.MoveToRegion(
-                MapSpan.FromCenterAndRadius(
-                    _viewModel.PosicionActual,
-                    Distance.FromKilometers(1)));
+                    MapSpan.FromCenterAndRadius(
+                        _viewModel.PosicionActual,
+                        Distance.FromKilometers(1)));
+                
+                CirclePosicionActual.Center = _viewModel.PosicionActual;
+                if (!MapaCliente.MapElements.Contains(CirclePosicionActual))
+                {
+                    MapaCliente.MapElements.Add(CirclePosicionActual);
+                }
             }
         }
     }
