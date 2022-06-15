@@ -74,5 +74,16 @@ namespace Churrap.Views
                 }
             }
         }
+
+        private void ChurrerxPin_MarkerClicked(Pin sender, PinClickedEventArgs e)
+        {
+            _viewModel.SeleccionarChurrerx(sender.Label);
+        }
+
+        private void ChurrerxListItem_Tapped(object sender, EventArgs e)
+        {
+            //TODO: obtener detalles del churrerx y usarlo para llamar a SeleccionarChurrerx
+            Console.WriteLine(sender);
+        }
     }
 }

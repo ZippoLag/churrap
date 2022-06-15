@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Churrap.Views;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Churrap
         public AppShell()
         {
             InitializeComponent();
+            Routing.RegisterRoute(nameof(ContactarChurrerxPage), typeof(ContactarChurrerxPage));
         }
     }
 }

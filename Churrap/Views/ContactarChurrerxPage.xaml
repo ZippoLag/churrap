@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodels="clr-namespace:Churrap.ViewModels" 
+             x:DataType="viewmodels:ContactarChurrerxViewModel"
+             x:Class="Churrap.Views.ContactarChurrerxPage"
+             Title="{Binding Title}">
+
+    <StackLayout Spacing="20" Padding="15">
+        <Label Text="Nombre" FontSize="Medium" />
+        <Label Text="{Binding SelectedChurrerx.Nombre}" FontSize="Small"/>
+        <Label Text="Distancia:" FontSize="Medium" />
+        <Label Text="{Binding Path=SelectedChurrerx.Posicion.Latitude, StringFormat='Latitud: {0}'}" LineBreakMode="NoWrap"  FontSize="13" />
+        <Label Text="{Binding Path=SelectedChurrerx.Posicion.Longitude, StringFormat='Longitud: {0}'}" LineBreakMode="NoWrap" FontSize="13" />
+    </StackLayout>
+
+</ContentPage>

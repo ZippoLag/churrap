@@ -9,12 +9,13 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Essentials;
 using System.Threading;
+using System.Linq;
 
 namespace Churrap.ViewModels
 {
     public class MapaClienteViewModel : BaseViewModel
     {
-        private Churrerx _churrerxSeleccionado;
+        private Churrerx _selectedChurrerx;
 
         protected CancellationTokenSource geoCTS;
         protected Position posicionActual;
@@ -26,8 +27,6 @@ namespace Churrap.ViewModels
         public ObservableCollection<Churrerx> Churrerxs { get; }
         public Command LoadChurrerxsCommand { get; }
         public Command AddChurrerxCommand { get; }
-        public Command<Churrerx> ChurrerxTappedCommand { get; }
-
         public Command ActualizarPosicionActualCommand { get; }
 
         public MapaClienteViewModel()
@@ -38,8 +37,6 @@ namespace Churrap.ViewModels
             ActualizarPosicionActualCommand = new Command(async () => await ActualizarPosicionActual());
 
             LoadChurrerxsCommand = new Command(async () => await ExecuteLoadChurrerxsCommand());
-
-            ChurrerxTappedCommand = new Command<Churrerx>(OnItemSelected);
 
             AddChurrerxCommand = new Command(OnAddChurrerx);
         }
@@ -84,11 +81,11 @@ namespace Churrap.ViewModels
 
         public Churrerx SelectedChurrerx
         {
-            get => _churrerxSeleccionado;
+            get => _selectedChurrerx;
             set
             {
-                SetProperty(ref _churrerxSeleccionado, value);
-                OnItemSelected(value);
+                SetProperty(ref _selectedChurrerx, value);
+                OnChurrerxSelected(value);
             }
         }
 
@@ -97,12 +94,18 @@ namespace Churrap.ViewModels
             //await Shell.Current.GoToAsync(nameof(NewChurrerxPage));
         }
 
-        private async void OnItemSelected(Churrerx chx)
+        public void SeleccionarChurrerx(string nombre)
+        {
+            Churrerx chx = Churrerxs.FirstOrDefault(c => c.Nombre.Equals(nombre));
+            SelectedChurrerx = chx;
+        }
+
+        private async void OnChurrerxSelected(Churrerx chx)
         {
             if (chx == null)
                 return;
 
-            //await Shell.Current.GoToAsync($"{nameof(ChurrerxDetailPage)}?{nameof(ChurrerxDetailViewModel.ChurrerxId)}={item.Id}");
+            await Shell.Current.GoToAsync($"{nameof(ContactarChurrerxPage)}?{nameof(ContactarChurrerxViewModel.Nombre)}={chx.Nombre}");
         }
 
         private async Task ActualizarPosicionActual()
