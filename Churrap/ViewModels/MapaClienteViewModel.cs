@@ -15,8 +15,6 @@ namespace Churrap.ViewModels
 {
     public class MapaClienteViewModel : BaseViewModel
     {
-        private Churrerx _selectedChurrerx;
-
         protected CancellationTokenSource geoCTS;
         protected Position posicionActual;
         public Position PosicionActual
@@ -67,7 +65,6 @@ namespace Churrap.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
-            SelectedChurrerx = null;
 
             Task.Run(ActualizarPosicionActual);
         }
@@ -79,29 +76,15 @@ namespace Churrap.ViewModels
             }
         }
 
-        public Churrerx SelectedChurrerx
-        {
-            get => _selectedChurrerx;
-            set
-            {
-                SetProperty(ref _selectedChurrerx, value);
-                OnChurrerxSelected(value);
-            }
-        }
-
         private async void OnAddChurrerx(object obj)
         {
             //await Shell.Current.GoToAsync(nameof(NewChurrerxPage));
         }
 
-        public void SeleccionarChurrerx(string nombre)
+        public async Task SeleccionarChurrerx(string nombre)
         {
             Churrerx chx = Churrerxs.FirstOrDefault(c => c.Nombre.Equals(nombre));
-            SelectedChurrerx = chx;
-        }
 
-        private async void OnChurrerxSelected(Churrerx chx)
-        {
             if (chx == null)
                 return;
 
