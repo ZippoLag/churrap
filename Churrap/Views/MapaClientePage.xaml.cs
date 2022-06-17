@@ -24,8 +24,9 @@ namespace Churrap.Views
             InitializeComponent();
 
             BindingContext = _viewModel = new MapaClienteViewModel();
-
-            _viewModel.PropertyChanged += OnPosicionActualChanged;
+            
+            _viewModel.PropertyChanged += OnIsBusyChanged;
+            _viewModel.PropertyChanged += OnPosicionActualChangedOrChanging;
 
             CirclePosicionActual = new Circle { Center = new Position(), Radius = Distance.FromMeters(20) };
         }
@@ -42,22 +43,31 @@ namespace Churrap.Views
             _viewModel.OnDisappearing();
         }
 
-        protected void OnPosicionActualChanged(object sender, PropertyChangedEventArgs e)
+        /// <summary>
+        /// Si ya existe una posición guardada, es interesante mover la vista del mapa tan pronto como se presione el botón (y luego si hay una posición nueva, se actualizará moviéndose nuevamente). Esto se podría lograr mediante un Event Handler bindeado al Click del botón, no obstante reaccionar al Cancellation Token cumple con el mismo propósito y sólo utilizando Commands
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void OnPosicionActualChangedOrChanging(object sender, PropertyChangedEventArgs e)
         {
-            //TODO: configurar como parametro el radio?
-            if (e.PropertyName.Equals("PosicionActual"))
+            if (e.PropertyName.Equals("PosicionActual") || e.PropertyName.Equals("ActualizandoPosicionCT"))
             {
                 MoverPinYVistaMapaAPosicionActual();
             }
         }
 
-        protected void OnActualizarPosicionTapped(object sender, EventArgs e)
+        /// <summary>
+        /// Toda ContentPage tiene una propiedad interna IsBusy que puede o no mostrar indicadores según el SO y su versión. Aquí la mantenemos actualizada con la propiedad homónima del ViewModel.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void OnIsBusyChanged(object sender, PropertyChangedEventArgs e)
         {
-            MoverPinYVistaMapaAPosicionActual();
-
-            _viewModel.ActualizarPosicionActualCommand.Execute(sender);
+            if (e.PropertyName.Equals("IsBusy"))
+            {
+                this.IsBusy = _viewModel.IsBusy;
+            }
         }
-
         private void MoverPinYVistaMapaAPosicionActual()
         {
             if (_viewModel.PosicionActual != null)
@@ -75,11 +85,13 @@ namespace Churrap.Views
             }
         }
 
+        //TODO: reemplazar por Command
         private void ChurrerxPin_MarkerClicked(Pin sender, PinClickedEventArgs e)
         {
             _viewModel.SeleccionarChurrerx(sender.Label);
         }
 
+        //TODO: reemplazar por Command
         private void ChurrerxListItem_Tapped(object sender, EventArgs e)
         {
             //TODO: obtener detalles del churrerx y usarlo para llamar a SeleccionarChurrerx

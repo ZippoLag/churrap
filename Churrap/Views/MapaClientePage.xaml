@@ -26,10 +26,14 @@
                     </maps:Map.ItemTemplate>
                 </maps:Map>
             </FlexLayout>
-            <StackLayout Spacing="15" Padding="20" Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="⌖" IsEnabled="{Binding NotIsBusy}" Clicked="OnActualizarPosicionTapped" />
-                <Button HorizontalOptions="StartAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="🔍" Command="{Binding LoadChurrerxsCommand}" IsEnabled="{Binding NotIsBusy}" />
-            </StackLayout>
+            <StackLayout>
+                <StackLayout Spacing="15" Padding="20" Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                    <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="⌖" Command="{Binding ActualizarPosicionActualCommand}" />
+                    <Button HorizontalOptions="StartAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="🔍" Command="{Binding CargarChurrerxsCommand}" />
+                </StackLayout>
+                <!--TODO: reconfigurar UI para usar AbsoluteLayout y que este ActivityIndicator se muestre sobre el mapa sin hacer saltar la UI para todos lados-->
+                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" />
+            </StackLayout>            
         </FlexLayout>
     </ContentPage>
     
@@ -37,7 +41,7 @@
         <ContentPage.ToolbarItems>
             <ToolbarItem Text="Add" Command="{Binding AddChurrerxCommand}" />
         </ContentPage.ToolbarItems>
-        <RefreshView x:DataType="local:MapaClienteViewModel" Command="{Binding LoadChurrerxsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <RefreshView x:DataType="local:MapaClienteViewModel" Command="{Binding CargarChurrerxsCommand}" IsRefreshing="{Binding CargandoChurrerxs, Mode=OneWay}">
             <CollectionView x:Name="ChurrerxsListView"
                 ItemsSource="{Binding Churrerxs}"
                 SelectionMode="None">

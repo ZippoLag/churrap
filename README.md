@@ -49,6 +49,7 @@ Si, si bien soy un hijo de los 90's al que no le sale con naturalidad, y si bien
 
 ## Changelog (en orden inverso):
 
+* 2022/06/17: reemplazando Event Handlers por Commands
 * 2022/06/15: agregada pagina para contactar churrerxs y logica para mostrarla (WiP)
 * 2022/06/12: solución básica para obtener posición actual (al iniciar y manualmente mediante botón)
 * 2022/06/07: refactoreada solucion para usar MVVM con AppShell e implementado Modelo y Servicio Mockeado básico
