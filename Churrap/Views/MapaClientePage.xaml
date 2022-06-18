@@ -5,7 +5,8 @@
              Title="{Binding Title}"
              xmlns:local="clr-namespace:Churrap.ViewModels" 
             xmlns:model="clr-namespace:Churrap.Models"
-            x:DataType="local:MapaClienteViewModel">
+            x:DataType="local:MapaClienteViewModel"
+            x:Name="MapaClientePageRoot">
 
     <ContentPage Title="Mapa"
                  xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps">
@@ -58,7 +59,8 @@
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
-                                Tapped="ChurrerxListItem_Tapped" >
+                                Command="{Binding BindingContext.SeleccionarChurrerxCommand, Source={x:Reference MapaClientePageRoot}}"
+                                CommandParameter="{Binding Nombre}">
                                 </TapGestureRecognizer>
                             </StackLayout.GestureRecognizers>
                         </StackLayout>

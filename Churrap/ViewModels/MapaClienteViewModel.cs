@@ -28,6 +28,8 @@ namespace Churrap.ViewModels
 
             CargarChurrerxsCommand = new Command(async () => await CargarChurrerxs(), () => !CargandoChurrerxs);
 
+            SeleccionarChurrerxCommand = new Command<string>(async (nombre) => await SeleccionarChurrerx(nombre));
+
             AddChurrerxCommand = new Command(OnAddChurrerx);
 
             this.PropertyChanged += UpdateIsBusyOnPropertyChanged;
@@ -40,9 +42,11 @@ namespace Churrap.ViewModels
         }
         public void OnDisappearing()
         {
-            if (actualizandoPosicionCT != null && !actualizandoPosicionCT.IsCancellationRequested)
+            if (ActualizandoPosicionCT != null && !ActualizandoPosicionCT.IsCancellationRequested)
             {
-                actualizandoPosicionCT.Cancel();
+                ActualizandoPosicionCT.Cancel();
+                ActualizandoPosicionCT.Dispose();
+                ActualizandoPosicionCT = null;
             }
         }
 
@@ -103,24 +107,21 @@ namespace Churrap.ViewModels
             //await Shell.Current.GoToAsync(nameof(NewChurrerxPage));
         }
 
+        public Command SeleccionarChurrerxCommand { get; }
         public async Task SeleccionarChurrerx(string nombre)
         {
-            Churrerx chx = Churrerxs.FirstOrDefault(c => c.Nombre.Equals(nombre));
-
-            if (chx == null)
-                return;
-
-            await Shell.Current.GoToAsync($"{nameof(ContactarChurrerxPage)}?{nameof(ContactarChurrerxViewModel.Nombre)}={chx.Nombre}");
+            await Shell.Current.GoToAsync($"{nameof(ContactarChurrerxPage)}?{nameof(ContactarChurrerxViewModel.Nombre)}={nombre}");
         }
 
         #region ActualizarPosicionActual
-        protected CancellationTokenSource actualizandoPosicionCT = null;
+        protected CancellationTokenSource actualizandoPosicionCT;
         public CancellationTokenSource ActualizandoPosicionCT
         {
             get => actualizandoPosicionCT;
             private set
             {
                 SetProperty(ref actualizandoPosicionCT, value);
+                //BUG: por qué comienza el botón deshabilitado a pesar de ser = null? (igual, aparece deshabilitado pero al tocarlo se ejecuta bien el metodo)
                 ActualizarPosicionActualCommand?.ChangeCanExecute();
             }
         }

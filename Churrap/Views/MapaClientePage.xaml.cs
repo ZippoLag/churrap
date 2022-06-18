@@ -85,17 +85,14 @@ namespace Churrap.Views
             }
         }
 
-        //TODO: reemplazar por Command
+        /// <summary>
+        /// Idealmente usaría un command, pero los Pin de Map no soportan Bind a command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChurrerxPin_MarkerClicked(Pin sender, PinClickedEventArgs e)
         {
-            _viewModel.SeleccionarChurrerx(sender.Label);
-        }
-
-        //TODO: reemplazar por Command
-        private void ChurrerxListItem_Tapped(object sender, EventArgs e)
-        {
-            //TODO: obtener detalles del churrerx y usarlo para llamar a SeleccionarChurrerx
-            Console.WriteLine(sender);
+            _ = _viewModel.SeleccionarChurrerx(sender.Label);
         }
     }
 }
