@@ -90,9 +90,9 @@ namespace Churrap.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ChurrerxPin_MarkerClicked(Pin sender, PinClickedEventArgs e)
+        private void ChurrerxPin_MarkerClicked(object sender, PinClickedEventArgs e)
         {
-            _ = _viewModel.SeleccionarChurrerx(sender.Label);
+            _ = _viewModel.SeleccionarChurrerx(((Pin)sender).Label);
         }
     }
 }
