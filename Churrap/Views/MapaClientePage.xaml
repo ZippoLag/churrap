@@ -10,31 +10,37 @@
 
     <ContentPage Title="Mapa"
                  xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps">
-        <FlexLayout Direction="Column">
+        <FlexLayout Direction="Column" FlexLayout.Grow="1">
             <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
                 <Label Text="Churrap - Cliente" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
             </Frame>
 
-            <FlexLayout FlexLayout.Grow="1">
-                <maps:Map x:Name="MapaCliente" FlexLayout.Grow="1" ItemsSource="{Binding Churrerxs}">
+            <AbsoluteLayout FlexLayout.Grow="1" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand" >
+                <maps:Map x:Name="MapaCliente" ItemsSource="{Binding Churrerxs}"
+                          AbsoluteLayout.LayoutBounds="0,0,1,0.8"
+                          AbsoluteLayout.LayoutFlags="All">
                     <maps:Map.ItemTemplate>
                         <DataTemplate>
                             <maps:Pin x:DataType="model:Churrerx"
-                                      Position="{Binding Posicion}"
-                                      Label="{Binding Nombre}" 
-                                      MarkerClicked="ChurrerxPin_MarkerClicked" />
+                                          Position="{Binding Posicion}"
+                                          Label="{Binding Nombre}" 
+                                          MarkerClicked="ChurrerxPin_MarkerClicked" />
                         </DataTemplate>
                     </maps:Map.ItemTemplate>
                 </maps:Map>
-            </FlexLayout>
-            <StackLayout>
-                <StackLayout Spacing="15" Padding="20" Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                
+                <StackLayout Spacing="15" Padding="20" Orientation="Horizontal" 
+                             VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
+                             AbsoluteLayout.LayoutBounds="0,1,1,0.2"
+                             AbsoluteLayout.LayoutFlags="All">
                     <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="⌖" Command="{Binding ActualizarPosicionActualCommand}" />
                     <Button HorizontalOptions="StartAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="🔍" Command="{Binding CargarChurrerxsCommand}" />
                 </StackLayout>
-                <!--TODO: reconfigurar UI para usar AbsoluteLayout y que este ActivityIndicator se muestre sobre el mapa sin hacer saltar la UI para todos lados-->
-                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" />
-            </StackLayout>            
+
+                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"
+                                   AbsoluteLayout.LayoutBounds="0.025,0.75,0.1,0.1"
+                                   AbsoluteLayout.LayoutFlags="All"/>
+            </AbsoluteLayout>
         </FlexLayout>
     </ContentPage>
     
