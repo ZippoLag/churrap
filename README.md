@@ -49,7 +49,7 @@ Si, si bien soy un hijo de los 90's al que no le sale con naturalidad, y si bien
 
 ## Changelog (en orden inverso):
 
-* 2022/06/19: agregando detalles a ContactarChurrerx
+* 2022/06/19: agregando detalles a ContactarChurrerx (distancia, ubicacion/dirección)
 * 2022/06/19: movida responsabilidad de PosicionActual a nueva BasePosicionViewModel
 * 2022/06/18: MapaClientePage ahora usa un AbsoluteLayout asi que el ActivityIndicator no rompe la pagina
 * 2022/06/18: sigue el reemplazo por commands y la navegacion a ContactarChurrerxPage

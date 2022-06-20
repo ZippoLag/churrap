@@ -10,6 +10,7 @@ using Xamarin.Forms.Maps;
 using Xamarin.Essentials;
 using System.Threading;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Churrap.ViewModels
 {
@@ -57,8 +58,10 @@ namespace Churrap.ViewModels
             try
             {
                 SelectedChurrerx = await ChurrerxService.GetChurrerxAsync(nombre);
+                ActualizarDistancia();
+                ActualizarDireccion();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Debug.WriteLine($"No se pudo cargar al Churrerx {nombre}");
             }
@@ -71,8 +74,13 @@ namespace Churrap.ViewModels
             //TODO: cómo manejamos cambios en la posicion del churrerx?
             if (e.PropertyName.Equals("PosicionActual"))
             {
-                this.Distancia = Distance.BetweenPositions(this.PosicionActual, this.SelectedChurrerx.Posicion).Meters;
+                ActualizarDistancia();
             }
+        }
+
+        private void ActualizarDistancia()
+        {
+            this.Distancia = Distance.BetweenPositions(this.PosicionActual, this.SelectedChurrerx.Posicion).Meters;
         }
 
         private double distancia;
@@ -80,6 +88,29 @@ namespace Churrap.ViewModels
         {
             get => distancia;
             private set => SetProperty(ref distancia, value);
+        }
+        #endregion
+
+        #region Direccion
+        private async void ActualizarDireccion()
+        {
+            var placemarks = await Geocoding.GetPlacemarksAsync(SelectedChurrerx.Posicion.Latitude, SelectedChurrerx.Posicion.Longitude);
+            var ubicacion = placemarks.FirstOrDefault();
+            if (ubicacion != null)
+            {
+                this.Direccion = $"{ubicacion.Thoroughfare} {ubicacion.SubThoroughfare}";
+            }
+            else
+            {
+                this.Direccion = "";
+            }
+        }
+
+        private string direccion;
+        public string Direccion
+        {
+            get => direccion;
+            private set => SetProperty(ref direccion, value);
         }
         #endregion
     }
