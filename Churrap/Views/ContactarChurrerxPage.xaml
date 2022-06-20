@@ -10,7 +10,7 @@
         <Label Text="Nombre" FontSize="Medium" />
         <Label Text="{Binding SelectedChurrerx.Nombre}" FontSize="Small"/>
         <Label Text="Distancia:" FontSize="Medium" />
-        <Label Text="{Binding Path=SelectedChurrerx.Posicion.Latitude, StringFormat='Latitud: {0}'}" LineBreakMode="NoWrap"  FontSize="13" />
+        <Label Text="{Binding Path=Distancia, StringFormat='{0:F0}m'}" LineBreakMode="NoWrap"  FontSize="13" />
         <Label Text="{Binding Path=SelectedChurrerx.Posicion.Longitude, StringFormat='Longitud: {0}'}" LineBreakMode="NoWrap" FontSize="13" />
     </StackLayout>
 

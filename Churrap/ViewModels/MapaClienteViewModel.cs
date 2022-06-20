@@ -14,7 +14,7 @@ using System.ComponentModel;
 
 namespace Churrap.ViewModels
 {
-    public class MapaClienteViewModel : BaseViewModel
+    public class MapaClienteViewModel : BasePosicionViewModel
     {
         public ObservableCollection<Churrerx> Churrerxs { get; }
         public Command AddChurrerxCommand { get; }
@@ -24,30 +24,25 @@ namespace Churrap.ViewModels
             Title = "Mapa de Churrerxs";
             Churrerxs = new ObservableCollection<Churrerx>();
 
-            ActualizarPosicionActualCommand = new Command(async () => await ActualizarPosicionActual(), () => ActualizandoPosicionCT == null);
-
-            CargarChurrerxsCommand = new Command(async () => await CargarChurrerxs(), () => !CargandoChurrerxs);
+             CargarChurrerxsCommand = new Command(async () => await CargarChurrerxs(), () => !CargandoChurrerxs);
 
             SeleccionarChurrerxCommand = new Command<string>(async (nombre) => await SeleccionarChurrerx(nombre));
 
             AddChurrerxCommand = new Command(OnAddChurrerx);
 
+            this.PropertyChanged -= base.UpdateIsBusyOnPropertyChanged;
             this.PropertyChanged += UpdateIsBusyOnPropertyChanged;
         }
 
-        public void OnAppearing()
+        public new void OnAppearing()
         {
-            Task.Run(ActualizarPosicionActual);
+            base.OnAppearing();
+
             Task.Run(CargarChurrerxs);
         }
-        public void OnDisappearing()
+        public new void OnDisappearing()
         {
-            if (ActualizandoPosicionCT != null && !ActualizandoPosicionCT.IsCancellationRequested)
-            {
-                ActualizandoPosicionCT.Cancel();
-                ActualizandoPosicionCT.Dispose();
-                ActualizandoPosicionCT = null;
-            }
+            base.OnDisappearing();
         }
 
         /// <summary>
@@ -55,7 +50,7 @@ namespace Churrap.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void UpdateIsBusyOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        new protected void UpdateIsBusyOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals("ActualizandoPosicionCT") || e.PropertyName.Equals("CargandoChurrerxs"))
             {
@@ -112,54 +107,5 @@ namespace Churrap.ViewModels
         {
             await Shell.Current.GoToAsync($"{nameof(ContactarChurrerxPage)}?{nameof(ContactarChurrerxViewModel.Nombre)}={nombre}");
         }
-
-        #region ActualizarPosicionActual
-        protected CancellationTokenSource actualizandoPosicionCT;
-        public CancellationTokenSource ActualizandoPosicionCT
-        {
-            get => actualizandoPosicionCT;
-            private set
-            {
-                SetProperty(ref actualizandoPosicionCT, value);
-                //BUG: por qué comienza el botón deshabilitado a pesar de ser = null? (igual, aparece deshabilitado pero al tocarlo se ejecuta bien el metodo)
-                ActualizarPosicionActualCommand?.ChangeCanExecute();
-            }
-        }
-        protected Position posicionActual;
-        public Position PosicionActual
-        {
-            get => posicionActual;
-            private set => SetProperty(ref posicionActual, value);
-        }
-        public Command ActualizarPosicionActualCommand { get; }
-        private async Task ActualizarPosicionActual()
-        {
-            if (ActualizandoPosicionCT != null)
-                return;
-
-            try
-            {
-                ActualizandoPosicionCT = new CancellationTokenSource(); ;
-
-                Location posicionAsLocation = await Geolocation.GetLastKnownLocationAsync();
-                if (posicionAsLocation != null)
-                {
-                    PosicionActual = new Position(posicionAsLocation.Latitude, posicionAsLocation.Longitude);
-                }
-
-                GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
-                posicionAsLocation = await Geolocation.GetLocationAsync(request, ActualizandoPosicionCT.Token);
-
-                if (posicionAsLocation != null)
-                {
-                    PosicionActual = new Position(posicionAsLocation.Latitude, posicionAsLocation.Longitude);
-                }
-            }
-            finally
-            {
-                ActualizandoPosicionCT = null;
-            }
-        }
-        #endregion
     }
 }

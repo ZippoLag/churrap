@@ -9,37 +9,47 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Essentials;
 using System.Threading;
+using System.ComponentModel;
 
 namespace Churrap.ViewModels
 {
     [QueryProperty(nameof(Nombre), nameof(Nombre))]
-    public class ContactarChurrerxViewModel : BaseViewModel
+    public class ContactarChurrerxViewModel : BasePosicionViewModel
     {
-        private string _nombre;
-        private Churrerx _selectedChurrerx;
-        public Churrerx SelectedChurrerx { get => _selectedChurrerx; private set => SetProperty(ref _selectedChurrerx, value); }
-
         public ContactarChurrerxViewModel()
         {
-            
+            PropertyChanged += OnPosicionChangedUpdateDistancia;
         }
 
-        public void OnAppearing()
+        public new void OnAppearing()
         {
-            Title = $"Contactar a {_selectedChurrerx?.Nombre}?";
-        }
-        public void OnDisappearing()
-        {
+            base.OnAppearing();
+
+            Title = $"Contactar a {selectedChurrerx?.Nombre}?";
         }
 
+        public new void OnDisappearing()
+        {
+            base.OnDisappearing();
+        }
+
+        private string nombre;
         public string Nombre
         {
-            get => _nombre;
+            get => nombre;
             set
             {
-                _nombre = value;
+                nombre = value;
                 CargarChurrerxAsync(value);
             }
+        }
+
+        #region CargarChurrerxAsync
+        private Churrerx selectedChurrerx;
+        public Churrerx SelectedChurrerx 
+        { 
+            get => selectedChurrerx; 
+            private set => SetProperty(ref selectedChurrerx, value); 
         }
 
         private async void CargarChurrerxAsync(string nombre)
@@ -53,5 +63,24 @@ namespace Churrap.ViewModels
                 Debug.WriteLine($"No se pudo cargar al Churrerx {nombre}");
             }
         }
+        #endregion
+
+        #region Distancia
+        protected void OnPosicionChangedUpdateDistancia(object sender, PropertyChangedEventArgs e)
+        {
+            //TODO: cómo manejamos cambios en la posicion del churrerx?
+            if (e.PropertyName.Equals("PosicionActual"))
+            {
+                this.Distancia = Distance.BetweenPositions(this.PosicionActual, this.SelectedChurrerx.Posicion).Meters;
+            }
+        }
+
+        private double distancia;
+        public double Distancia
+        {
+            get => distancia;
+            private set => SetProperty(ref distancia, value);
+        }
+        #endregion
     }
 }
