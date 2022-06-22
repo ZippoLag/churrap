@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Churrap.ViewModels
@@ -36,8 +37,13 @@ namespace Churrap.ViewModels
             if (hasPropertyChanged)
             {
                 backingStore = value;
-                onChanged?.Invoke();
-                OnPropertyChanged(propertyName);
+                
+                //Nota: puede que sea overkill que todos los cambios triggereados en properties impacten sobre el hilo principal, pero ¿por qué alguna debería de NO hacerlo? De esta forma estamos cubiertos ante cambios desencadenados en propiedades desde otros hilos, y al cabo que para eso está este helper base: para hacernos la vida más simple
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    onChanged?.Invoke();
+                    OnPropertyChanged(propertyName);
+                });
             }
             
             return hasPropertyChanged;

@@ -33,10 +33,16 @@
                              VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
                              AbsoluteLayout.LayoutBounds="0,1,1,0.2"
                              AbsoluteLayout.LayoutFlags="All">
-                    <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="⌖" Command="{Binding ActualizarPosicionActualCommand}" />
+                    <StackLayout HorizontalOptions="EndAndExpand" VerticalOptions="Center" HeightRequest="50" Orientation="Horizontal" >
+                        <!--TODO: reemplazar con un botón custom de 2 o 3 estados (ubicacion:off, on, y con centrado activo) como usa Goggle Maps (pero sin estado de navegación/brújula)-->
+                        <Button HorizontalOptions="EndAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="⌖" Clicked="MoverMapa_Clicked" />
+                        <Switch x:Name="MoverMapaSwitch" IsToggled="True"  />
+                    </StackLayout>
+                    
                     <Button HorizontalOptions="StartAndExpand" VerticalOptions="Center" HeightRequest="50" FontSize="Title" Text="🔍" Command="{Binding CargarChurrerxsCommand}" />
                 </StackLayout>
 
+                <!--Nota: ¿quien usa la app necesita saber cuándo se está actualizando algo en el fondo? - Probablemente no, pero yo sí, e implementarlo de una forma robusta fue un desafío interesante, tanto por cómo detectar el estado correcto (Ctrl+Shift+F "IsBusy") como por cómo mostrar elementos uno sobre otro (AbsoluteLayout).-->
                 <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"
                                    AbsoluteLayout.LayoutBounds="0.025,0.75,0.1,0.1"
                                    AbsoluteLayout.LayoutFlags="All"/>

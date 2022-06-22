@@ -18,22 +18,18 @@ namespace Churrap.ViewModels
     {
         public BasePosicionViewModel()
         {
-            ActualizarPosicionActualCommand = new Command(async () => await ActualizarPosicionActual(), () => ActualizandoPosicionCT == null);
-
             this.PropertyChanged += UpdateIsBusyOnPropertyChanged;
         }
 
         public void OnAppearing()
         {
-            Task.Run(ActualizarPosicionActual);
+            actualizandoPosicionTask = Task.Run(ActualizarPosicionActual);
         }
         public void OnDisappearing()
         {
-            if (ActualizandoPosicionCT != null && !ActualizandoPosicionCT.IsCancellationRequested)
+            if (actualizandoPosicionCT != null && !actualizandoPosicionCT.IsCancellationRequested)
             {
-                ActualizandoPosicionCT.Cancel();
-                ActualizandoPosicionCT.Dispose();
-                ActualizandoPosicionCT = null;
+                actualizandoPosicionCT.Cancel();
             }
         }
 
@@ -44,23 +40,20 @@ namespace Churrap.ViewModels
         /// <param name="e"></param>
         protected virtual void UpdateIsBusyOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName.Equals("ActualizandoPosicionCT"))
+            if (e.PropertyName.Equals("IsActualizandoPosicion"))
             {
-                this.IsBusy = this.ActualizandoPosicionCT != null;
+                this.IsBusy = this.IsActualizandoPosicion;
             }
         }
 
         #region ActualizarPosicionActual
         protected CancellationTokenSource actualizandoPosicionCT;
-        public CancellationTokenSource ActualizandoPosicionCT
+        protected Task actualizandoPosicionTask;
+        protected bool isActualizandoPosicion;
+        public bool IsActualizandoPosicion
         {
-            get => actualizandoPosicionCT;
-            private set
-            {
-                SetProperty(ref actualizandoPosicionCT, value);
-                //BUG: por qué comienza el botón deshabilitado a pesar de ser = null? (igual, aparece deshabilitado pero al tocarlo se ejecuta bien el metodo)
-                ActualizarPosicionActualCommand?.ChangeCanExecute();
-            }
+            get => isActualizandoPosicion;
+            private set => SetProperty(ref isActualizandoPosicion, value);
         }
         protected Position posicionActual;
         public Position PosicionActual
@@ -68,33 +61,58 @@ namespace Churrap.ViewModels
             get => posicionActual;
             private set => SetProperty(ref posicionActual, value);
         }
-        public Command ActualizarPosicionActualCommand { get; }
+
         private async Task ActualizarPosicionActual()
         {
-            if (ActualizandoPosicionCT != null)
+            if (actualizandoPosicionCT?.IsCancellationRequested ?? false)
                 return;
 
             try
             {
-                ActualizandoPosicionCT = new CancellationTokenSource(); ;
+                actualizandoPosicionCT = new CancellationTokenSource();
+                Location posicionAsLocation = null;
 
-                Location posicionAsLocation = await Geolocation.GetLastKnownLocationAsync();
-                if (posicionAsLocation != null)
+                if (PosicionActual == null)
                 {
-                    PosicionActual = new Position(posicionAsLocation.Latitude, posicionAsLocation.Longitude);
+                    IsActualizandoPosicion = true;
+                    posicionAsLocation = await Geolocation.GetLastKnownLocationAsync();
+
+                    if (posicionAsLocation != null)
+                    {
+                        PosicionActual = new Position(posicionAsLocation.Latitude, posicionAsLocation.Longitude);
+                    }
+                    IsActualizandoPosicion = false;
                 }
 
                 GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
-                posicionAsLocation = await Geolocation.GetLocationAsync(request, ActualizandoPosicionCT.Token);
 
-                if (posicionAsLocation != null)
+                do
                 {
-                    PosicionActual = new Position(posicionAsLocation.Latitude, posicionAsLocation.Longitude);
-                }
+                    IsActualizandoPosicion = true;
+                    posicionAsLocation = await Geolocation.GetLocationAsync(request, actualizandoPosicionCT.Token);
+
+                    if (posicionAsLocation != null)
+                    {
+                        PosicionActual = new Position(posicionAsLocation.Latitude, posicionAsLocation.Longitude);
+                    }
+
+                    IsActualizandoPosicion = false;
+                    await Task.Delay(10000);
+                } while (!actualizandoPosicionCT.IsCancellationRequested);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
             finally
             {
-                ActualizandoPosicionCT = null;
+                IsActualizandoPosicion = false;
+
+                actualizandoPosicionCT.Dispose();
+                actualizandoPosicionCT = null;
+
+                actualizandoPosicionTask.Dispose();
+                actualizandoPosicionTask = null;
             }
         }
         #endregion

@@ -26,7 +26,7 @@ namespace Churrap.Views
             BindingContext = _viewModel = new MapaClienteViewModel();
             
             _viewModel.PropertyChanged += OnIsBusyChanged;
-            _viewModel.PropertyChanged += OnPosicionActualChangedOrChanging;
+            _viewModel.PropertyChanged += OnPosicionActualChanged;
 
             CirclePosicionActual = new Circle { Center = new Position(), Radius = Distance.FromMeters(20) };
         }
@@ -44,19 +44,6 @@ namespace Churrap.Views
         }
 
         /// <summary>
-        /// Si ya existe una posición guardada, es interesante mover la vista del mapa tan pronto como se presione el botón (y luego si hay una posición nueva, se actualizará moviéndose nuevamente). Esto se podría lograr mediante un Event Handler bindeado al Click del botón, no obstante reaccionar al Cancellation Token cumple con el mismo propósito y sólo utilizando Commands
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void OnPosicionActualChangedOrChanging(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName.Equals("PosicionActual") || e.PropertyName.Equals("ActualizandoPosicionCT"))
-            {
-                MoverPinYVistaMapaAPosicionActual();
-            }
-        }
-
-        /// <summary>
         /// Toda ContentPage tiene una propiedad interna IsBusy que puede o no mostrar indicadores según el SO y su versión. Aquí la mantenemos actualizada con la propiedad homónima del ViewModel.
         /// </summary>
         /// <param name="sender"></param>
@@ -68,7 +55,35 @@ namespace Churrap.Views
                 this.IsBusy = _viewModel.IsBusy;
             }
         }
-        private void MoverPinYVistaMapaAPosicionActual()
+
+        /// <summary>
+        /// Cada vez que cambia la posición actual, movemos el punto del usuario actual. También, si fue solicitado en la UI, movemos el mapa para centrarse en su posición.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void OnPosicionActualChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("PosicionActual"))
+            {
+                DibujarPosicionActual();
+                MoverMapaSiFueSolicitado();
+            }
+        }
+
+        private void MoverMapa_Clicked(object sender, EventArgs e)
+        {
+            MoverMapa();
+        }
+
+        private void MoverMapaSiFueSolicitado()
+        {
+            if (MoverMapaSwitch.IsToggled)
+            {
+                MoverMapa();
+            }
+        }
+
+        private void MoverMapa()
         {
             if (_viewModel.PosicionActual != null)
             {
@@ -76,7 +91,14 @@ namespace Churrap.Views
                     MapSpan.FromCenterAndRadius(
                         _viewModel.PosicionActual,
                         Distance.FromKilometers(1)));
-                
+            }
+        }
+
+        private void DibujarPosicionActual()
+        {
+            if (_viewModel.PosicionActual != null)
+            {
+                //TODO: agregar animación en lugar de simplemente mover de un tirón el círculo cambiando la posición del centro
                 CirclePosicionActual.Center = _viewModel.PosicionActual;
                 if (!MapaCliente.MapElements.Contains(CirclePosicionActual))
                 {

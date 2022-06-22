@@ -52,9 +52,9 @@ namespace Churrap.ViewModels
         /// <param name="e"></param>
         new protected void UpdateIsBusyOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName.Equals("ActualizandoPosicionCT") || e.PropertyName.Equals("CargandoChurrerxs"))
+            if (e.PropertyName.Equals("IsActualizandoPosicion") || e.PropertyName.Equals("CargandoChurrerxs"))
             {
-                this.IsBusy = this.CargandoChurrerxs || this.ActualizandoPosicionCT != null;
+                this.IsBusy = this.IsActualizandoPosicion || this.CargandoChurrerxs;
             }
         }
 
